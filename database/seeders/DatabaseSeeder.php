@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,17 +16,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'is_admin' => true,
-        ]);
-        User::factory()->create([
-            'name' => 'Nadiv',
-            'email' => 'nadiv.n.ft21@mail.umy.ac.id',
-            // 'is_admin' => false,
-        ]);
+        User::create(
+            [
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'password' => 'password',
+                'remember_token' => Str::random(10),
+                'is_admin' => true,
+            ]
+        );
+        User::create(
+            [
+                'name' => 'Nadiv Nurlutfiatsani Nugraha',
+                'email' => 'nadiv730@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '12345678',
+                'remember_token' => Str::random(10),
+                'is_admin' => false,
+            ]
+        );
         User::factory(100)->create();
-        Todo::factory(500)->create();
+        Todo::factory(500)->create([
+            'user_id' => function () {
+                return User::inRandomOrder()->first()->id;
+            },
+        ]);
+
     }
 }
