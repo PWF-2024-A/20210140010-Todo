@@ -6,8 +6,9 @@ namespace Database\Seeders;
 
 use App\Models\Todo;
 use App\Models\User;
-use Illuminate\Database\Seeder;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,11 +38,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
         User::factory(100)->create();
-        Todo::factory(500)->create([
-            'user_id' => function () {
-                return User::inRandomOrder()->first()->id;
-            },
-        ]);
+        Category::factory(200)->create();
+        Todo::factory(500)->create();
 
     }
 }
