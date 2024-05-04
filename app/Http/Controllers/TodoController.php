@@ -67,8 +67,16 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'category_id' => $request->category_id
+            // 'category_id' => 'required|exists:categories,id',
         ]);
+
+        $todo->update([
+            'title' => ucfirst($request->title),
+            'category_id' => $request->category_id,
+        ]);
+
+        return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
+
 
         // Practical
         // $todo->title = $request->title;
